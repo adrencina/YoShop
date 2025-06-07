@@ -1,0 +1,89 @@
+# --- Android ---
+*.iml
+.gradle/
+.idea/
+local.properties
+.DS_Store
+/build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.ap_
+*.db
+*.db-journal
+output.json
+# Android Studio Patch
+*.rej
+*.orig
+
+# --- Kotlin ---
+*.class
+*.kt~
+*.swp
+
+# --- Jetpack Compose ---
+.compose-cache/
+compose-cache/
+
+# --- Firebase ---
+google-services.json
+firebase-debug.log
+firebase-debug-event-*.json
+.crashlytics/
+fabric.properties
+
+# --- Room ---
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# --- OS y herramientas ---
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+ehthumbs.db
+Thumbs.db
+
+# --- Git ---
+*.orig
+*.rej
+*.sublime-workspace
+*.sublime-project
+
+# --- Build y caches ---
+/build/
+**/build/
+.gradle/
+.idea/
+local.properties
+/.cxx/
+/out/
+
+# --- Proguard ---
+proguard/
+*.pro.user
+
+# --- Signatures y claves (NUNCA subirlas) ---
+*.jks
+*.keystore
+*.pem
+*.key
+*.crt
+*.p12
+.secret/
+.env
+.env.*
+signing.properties
+
+# --- Misc ---
+node_modules/
+dist/
+.vscode/
+*.zip
+*.tar.gz
+*.7z
+*.rar

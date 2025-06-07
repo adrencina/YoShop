@@ -1,0 +1,102 @@
+[versions]
+agp = "8.10.0"
+kotlin = "2.0.21"
+
+# AndroidX
+coreKtx = "1.16.0"
+lifecycleRuntimeKtx = "2.9.0"
+activityCompose = "1.10.1"
+composeBom = "2024.09.00"
+
+# Material 3
+material3 = "1.3.1"
+materialIconsExtended = "1.7.8"
+
+# Navigation
+navigationRuntimeKtx = "2.8.6"
+navigationCompose = "2.8.6"
+
+# Coroutines
+kotlinxCoroutinesCore = "1.7.3"
+kotlinxCoroutinesAndroid = "1.7.3"
+
+# Room
+roomRuntime = "2.6.1"
+roomKtx = "2.6.1"
+roomCompiler = "2.6.1"
+runtimeLivedataVersion = "1.7.8"
+
+# Dagger Hilt
+hilt = "2.51.1"
+hiltNavigation = "1.2.0"
+
+# Firebase
+firebaseBom = "33.15.0"
+
+# Testing
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+
+[libraries]
+# AndroidX Core
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+# Lifecycle
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+# Activity
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+# Compose BOM
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+
+# Compose UI
+androidx-ui = { module = "androidx.compose.ui:ui" }
+androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+# Material 3
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+androidx-material3-v120 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+
+# Navigation
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+
+# Coroutines
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+
+# Room
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedataVersion" }
+
+# Dagger Hilt
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
+
+# Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
