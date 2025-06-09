@@ -6,9 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.claraterra.ui.screen.balance.BalanceScreen
 import com.example.claraterra.ui.screen.home.screen.HomeScreen
-import com.example.claraterra.ui.screen.inventory.InventoryScreen
+import com.example.claraterra.ui.screen.supplies.InventoryScreen
 import com.example.claraterra.ui.screen.login.LoginScreen
-import com.example.claraterra.ui.screen.photo.PhotoScreen
+import com.example.claraterra.ui.screen.sell.PhotoScreen
 import com.example.claraterra.ui.screen.settings.SettingsScreen
 import com.example.claraterra.ui.screen.splash.SplashScreen
 
@@ -39,11 +39,11 @@ fun AppNavGraph(
         }
 
         // 🔹 Rutas del BottomNavigationBar
-        composable(NavigationRoute.Inventory.route) {
+        composable(NavigationRoute.Supplies.route) {
             InventoryScreen(navController = navController)
         }
 
-        composable(NavigationRoute.Photo.route) {
+        composable(NavigationRoute.Sell.route) {
             PhotoScreen(navController = navController)
         }
 

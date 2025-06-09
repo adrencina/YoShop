@@ -14,7 +14,9 @@ fun ClaraTerraApp(
     val navController = rememberNavController()
     val isLoggedIn = auth.currentUser != null
 
-    ClaraTerraTheme {
+    ClaraTerraTheme(
+        darkTheme = false // Fijamos modo claro como predeterminado por ahora...
+    ) {
         Surface {
             AppNavGraph(navController = navController, isLoggedIn = isLoggedIn)
         }

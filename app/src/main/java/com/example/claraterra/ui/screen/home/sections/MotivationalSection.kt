@@ -22,11 +22,10 @@ fun MotivationalSection(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(120.dp)
-            .padding(horizontal = 16.dp)
+            .height(160.dp)
     ) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("Your motivational phrase here")
+            Text("Acá van las frases")
             IconButton(
                 onClick = { /* ... */ },
                 modifier = Modifier

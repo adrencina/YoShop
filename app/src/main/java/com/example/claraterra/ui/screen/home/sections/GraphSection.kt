@@ -19,10 +19,9 @@ fun GraphSection(
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(horizontal = 16.dp)
     ) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("Graph Placeholder")
+            Text("Acá va el gráfico")
         }
     }
 }

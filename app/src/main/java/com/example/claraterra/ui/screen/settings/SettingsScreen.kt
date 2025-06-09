@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.*
 import androidx.navigation.NavController
 import com.example.claraterra.ui.component.BottomNavigationBar
+import com.example.claraterra.ui.component.ScreenContainer
 
 @Composable
 fun SettingsScreen(
@@ -15,14 +16,15 @@ fun SettingsScreen(
     Scaffold(
         modifier = modifier,
         bottomBar = { BottomNavigationBar(navController = navController) }
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "Esta es la pantalla de Configuración")
+    ) { innerPadding ->
+
+        ScreenContainer(modifier = Modifier.padding(innerPadding)) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Pantalla de Configuraciónes")
+            }
         }
     }
 }

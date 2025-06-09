@@ -16,11 +16,9 @@ fun StockSection(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(180.dp)
-            .padding(horizontal = 16.dp)
     ) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("Stock items placeholder")
+            Text("Acá va el stock")
         }
     }
 }
