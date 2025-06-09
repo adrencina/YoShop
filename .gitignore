@@ -34,8 +34,6 @@ compose-cache/
 #fabric.properties
 
 # --- Room ---
-*.db
-*.db-journal
 *.db-shm
 *.db-wal
 
@@ -43,23 +41,16 @@ compose-cache/
 *.log
 *.tmp
 *.bak
-*.swp
 *.swo
 ehthumbs.db
 Thumbs.db
 
 # --- Git ---
-*.orig
-*.rej
 *.sublime-workspace
 *.sublime-project
 
 # --- Build y caches ---
-/build/
 **/build/
-.gradle/
-.idea/
-local.properties
 /.cxx/
 /out/
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "811499287913",
+    "project_id": "claraterra-42986",
+    "storage_bucket": "claraterra-42986.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811499287913:android:84f58f05fc6c03f16339f8",
+        "android_client_info": {
+          "package_name": "com.example.claraterra"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA17qC17-tuTHfbD-LrSYt1JyymXfjiupY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
