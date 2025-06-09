@@ -32,5 +32,4 @@ val AppTypography = Typography(
         fontFamily = Manrope,
         fontSize = 16.sp
     )
-    // Agregá más estilos según necesites
 )

@@ -1,10 +1,14 @@
 package com.example.claraterra.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.graphics.Color
 
-private val LightColorScheme = lightColorScheme(
+private val LightColors = lightColorScheme(
     primary = TerraPrimary,
     secondary = TerraSecondary,
     tertiary = TerraTertiary,
@@ -18,15 +22,35 @@ private val LightColorScheme = lightColorScheme(
     onError = TerraOnError
 )
 
+private val DarkColors = darkColorScheme(
+    primary = TerraOnPrimary,
+    secondary = TerraOnSecondary,
+    tertiary = TerraOnPrimary,
+    background = Color(0xFF121212),
+    surface = Color(0xFF1E1E1E),
+    error = TerraError,
+    onPrimary = TerraPrimary,
+    onSecondary = TerraSecondary,
+    onBackground = TerraBackground,
+    onSurface = TerraBackground,
+    onError = TerraOnError
+)
+
 @Composable
 fun ClaraTerraTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    MaterialTheme(
-        colorScheme = LightColorScheme,
-        typography = AppTypography,
-        shapes = AppShapes,
-        content = content
-    )
+    val colors = if (darkTheme) DarkColors else LightColors
+
+    CompositionLocalProvider(
+        LocalSpacing provides Spacing(),
+    ) {
+        MaterialTheme(
+            colorScheme = colors,
+            typography = AppTypography,
+            shapes = AppShapes,
+            content = content
+        )
+    }
 }
