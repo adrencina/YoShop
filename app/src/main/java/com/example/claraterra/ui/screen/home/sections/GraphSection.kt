@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.claraterra.ui.component.DonutChart
 import com.example.claraterra.ui.navigation.NavigationRoute
 import com.example.claraterra.ui.screen.home.sections.component.ActionCard
 import com.example.claraterra.ui.theme.AppShapes
@@ -48,14 +49,24 @@ fun GraphSection(
                 ) {
                     Text("Balance diario", style = MaterialTheme.typography.titleMedium)
                 }
-                // Placeholder del gráfico
-                Box(
-                    Modifier
+                // Gráfico circular
+                Column(
+                    modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp),
-                    contentAlignment = Alignment.Center
                 ) {
-                    Text("(Donut chart aquí)", color = Color.DarkGray)
+                    Spacer(modifier = Modifier.height(50.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        DonutChart(
+                            sales = 400f,
+                            purchases = 200f,
+                            modifier = Modifier.size(170.dp)
+                        )
+                    }
                 }
             }
         }
