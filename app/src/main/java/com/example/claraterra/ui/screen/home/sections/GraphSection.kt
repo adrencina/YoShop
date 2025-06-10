@@ -15,7 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.claraterra.ui.component.DonutChart
+import com.example.claraterra.ui.component.LinearProgressBarWithValue
+import com.example.claraterra.ui.component.SemiCircleChart
 import com.example.claraterra.ui.navigation.NavigationRoute
 import com.example.claraterra.ui.screen.home.sections.component.ActionCard
 import com.example.claraterra.ui.theme.AppShapes
@@ -25,6 +26,11 @@ fun GraphSection(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
+    val dailySales = 400f
+    val salesGoal = 1000f
+    val weeklyProgress = 3500f
+    val weeklyGoal = 5000f
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -36,38 +42,49 @@ fun GraphSection(
                 .fillMaxHeight()
                 .weight(3f)
                 .padding(end = 6.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.Gray),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
             shape = AppShapes.small
         ) {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 16.dp, horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 // Título
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Balance diario", style = MaterialTheme.typography.titleMedium)
-                }
-                // Gráfico circular
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    Spacer(modifier = Modifier.height(50.dp))
+                Text( modifier = Modifier.padding(bottom = 8.dp),
+                    text = "Balance diario",
+                    style = MaterialTheme.typography.titleMedium
+                )
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        DonutChart(
-                            sales = 400f,
-                            purchases = 200f,
-                            modifier = Modifier.size(170.dp)
-                        )
-                    }
-                }
+                // Gráfico semicircular
+                SemiCircleChart(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = dailySales,
+                    maxValue = salesGoal,
+                    primaryColor = Color(0xFF81C784),
+                    secondaryColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                    centerText = "$${dailySales.toInt()}",
+                    strokeWidth = 50.dp
+                )
+
+                Spacer(Modifier.weight(1f))
+
+                // La barra de progreso
+                LinearProgressBarWithValue(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = weeklyProgress,
+                    maxValue = weeklyGoal,
+                    primaryColor = Color(0xFF64B5F6),
+                    secondaryColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+                )
+
+                // Texto inferior
+                Text(
+                    text = "Objetivo de venta semanal",
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
             }
         }
 
@@ -83,27 +100,21 @@ fun GraphSection(
                 color = Color(0xFF81C784),
                 icon = Icons.Filled.Add,
                 contentDescription = "New Sale",
-                onClick = {
-                    navController.navigate(NavigationRoute.Sell.route)
-                }
+                onClick = { navController.navigate(NavigationRoute.Sell.route) }
             )
             ActionCard(
                 modifier = Modifier.weight(1f).padding(vertical = 2.dp),
                 color = Color(0xFF64B5F6),
                 icon = Icons.Filled.BarChart,
                 contentDescription = "View Balance",
-                onClick = {
-                    // Navegar o vemos...
-                }
+                onClick = { /* Navegar o vemos despues... */ }
             )
             ActionCard(
                 modifier = Modifier.weight(1f).padding(top = 4.dp),
                 color = Color(0xFFE57373),
                 icon = Icons.Filled.Storefront,
                 contentDescription = "Supplies",
-                onClick = {
-                    navController.navigate(NavigationRoute.Supplies.route)
-                }
+                onClick = { navController.navigate(NavigationRoute.Supplies.route) }
             )
         }
     }
