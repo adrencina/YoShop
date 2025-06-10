@@ -27,7 +27,7 @@ fun HomeScreen(
 
         ScreenContainer(modifier = Modifier.padding(innerPadding)) {
 
-            GraphSection()
+            GraphSection(navController = navController)
 
             Spacer(modifier = Modifier.height(16.dp))
 

@@ -30,11 +30,7 @@ fun BottomNavigationBar(navController: NavController) {
 
     val items = listOf(
         NavigationItem(NavigationRoute.Home, Icons.Outlined.Home, Icons.Filled.Home),
-        NavigationItem(
-            NavigationRoute.Supplies,
-            Icons.Outlined.Storefront,
-            Icons.Filled.Storefront
-        ),
+        NavigationItem(NavigationRoute.Supplies,Icons.Outlined.Storefront,Icons.Filled.Storefront),
         NavigationItem(NavigationRoute.Sell, Icons.Outlined.AddCircle, Icons.Filled.AddCircle),
         NavigationItem(NavigationRoute.Balance, Icons.Outlined.BarChart, Icons.Filled.BarChart),
         NavigationItem(NavigationRoute.Settings, Icons.Outlined.Settings, Icons.Filled.Settings)
