@@ -3,10 +3,10 @@ package com.example.claraterra.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "gastos")
-data class Gasto(
+@Entity(tableName = "productos")
+data class Producto(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val descripcion: String,
-    val monto: Double,
-    val timestamp: Long = System.currentTimeMillis()
+    val nombre: String,
+    val precioCosto: Double,
+    val precioVenta: Double
 )

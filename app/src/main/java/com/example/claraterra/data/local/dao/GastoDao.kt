@@ -11,6 +11,6 @@ interface GastoDao {
     @Insert
     suspend fun insertarGasto(gasto: Gasto)
 
-    @Query("SELECT * FROM gastos")
-    fun obtenerGastos(): Flow<List<Gasto>>
+    @Query("SELECT COALESCE(SUM(monto), 0.0) FROM gastos WHERE timestamp BETWEEN :startTime AND :endTime")
+    fun getTotalGastosEnRango(startTime: Long, endTime: Long): Flow<Double>
 }

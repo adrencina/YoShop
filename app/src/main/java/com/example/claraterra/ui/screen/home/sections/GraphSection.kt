@@ -15,73 +15,69 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.claraterra.ui.component.cardGradientBackground
 import com.example.claraterra.ui.component.LinearProgressBarWithValue
 import com.example.claraterra.ui.component.SemiCircleChart
 import com.example.claraterra.ui.navigation.NavigationRoute
 import com.example.claraterra.ui.screen.home.sections.component.ActionCard
+import com.example.claraterra.ui.screen.home.state.HomeUiState
 import com.example.claraterra.ui.theme.AppShapes
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun GraphSection(
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    uiState: HomeUiState
 ) {
-    val dailySales = 400f
-    val salesGoal = 1000f
-    val weeklyProgress = 3500f
-    val weeklyGoal = 5000f
+    val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("es", "AR"))
 
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(240.dp),
+        modifier = modifier.fillMaxWidth().height(240.dp),
     ) {
-        // Tarjeta principal del gráfico
         Card(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(3f)
-                .padding(end = 6.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-            shape = AppShapes.small
+            modifier = Modifier.fillMaxHeight().weight(3f).padding(end = 6.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+            shape = AppShapes.small,
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(vertical = 16.dp, horizontal = 16.dp),
+                modifier = Modifier.fillMaxSize().cardGradientBackground().padding(vertical = 16.dp, horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Título
-                Text( modifier = Modifier.padding(bottom = 8.dp),
-                    text = "Balance diario",
+                Text(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    text = "Ganancia del día",
+                    color = Color.Black.copy(alpha = 0.7f),
                     style = MaterialTheme.typography.titleMedium
                 )
 
-                // Gráfico semicircular
+                // El gráfico de semicírculo muestra la GANANCIA NETA del día.
                 SemiCircleChart(
                     modifier = Modifier.fillMaxWidth(),
-                    value = dailySales,
-                    maxValue = salesGoal,
-                    primaryColor = Color(0xFF81C784),
-                    secondaryColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    centerText = "$${dailySales.toInt()}",
+                    value = uiState.gananciaNetaDiaria.toFloat(),
+                    maxValue = 10000f,
+                    primaryColor = if (uiState.gananciaNetaDiaria >= 0) Color(0xFF81C784) else Color(0xFFE57373),
+                    secondaryColor = Color.Black.copy(alpha = 0.1f),
+                    centerText = currencyFormatter.format(uiState.gananciaNetaDiaria),
                     strokeWidth = 50.dp
                 )
 
                 Spacer(Modifier.weight(1f))
 
-                // La barra de progreso
+                // La barra de progreso muestra el avance hacia la meta SEMANAL de INGRESO BRUTO.
                 LinearProgressBarWithValue(
                     modifier = Modifier.fillMaxWidth(),
-                    value = weeklyProgress,
-                    maxValue = weeklyGoal,
+                    value = uiState.ingresoBrutoSemanal.toFloat(),
+                    maxValue = uiState.metaVentaSemanal.toFloat(),
                     primaryColor = Color(0xFF64B5F6),
-                    secondaryColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+                    secondaryColor = Color.Black.copy(alpha = 0.1f)
                 )
 
-                // Texto inferior
                 Text(
-                    text = "Objetivo de venta semanal",
+                    text = "Objetivo de Ingreso Semanal",
+                    color = Color.Black.copy(alpha = 0.7f),
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(top = 8.dp)
                 )
