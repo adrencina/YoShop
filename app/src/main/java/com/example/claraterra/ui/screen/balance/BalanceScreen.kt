@@ -1,19 +1,20 @@
 package com.example.claraterra.ui.screen.balance
 
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.claraterra.R
 import com.example.claraterra.ui.component.BottomNavigationBar
@@ -25,6 +26,8 @@ fun BalanceScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val textRevenue = remember { mutableStateOf("Valor Ganancia") }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -43,7 +46,7 @@ fun BalanceScreen(
                 modifier = Modifier
                     .size(50.dp))
 
-            Spacer(modifier = Modifier.weight(2f))
+            Spacer(modifier = Modifier.weight(1f))
 
             Image(
                 painter = painterResource(id = R.drawable.iconbalance),
@@ -76,6 +79,10 @@ fun BalanceScreen(
                         .clip(RoundedCornerShape(10.dp))
                         .background(color = Color.Red)
                     )
+                    Text(
+                        text = textRevenue.value,
+                        fontSize = 18.sp
+                    )
 
 
 
@@ -90,6 +97,10 @@ fun BalanceScreen(
                         .clip(RoundedCornerShape(10.dp))
                         .background(color = Color.Red)
                     )
+                    Text(
+                        text = textRevenue.value,
+                        fontSize = 18.sp
+                    )
                 }
 
                 Spacer(modifier = Modifier.weight(0.5f))
@@ -100,9 +111,11 @@ fun BalanceScreen(
                         .clip(RoundedCornerShape(10.dp))
                         .background(color = Color.Red)
                     )
+                    Text(
+                        text = textRevenue.value,
+                        fontSize = 18.sp
+                    )
                 }
-
-                Spacer(modifier = Modifier.weight(5f))
 
 
 
