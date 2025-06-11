@@ -35,7 +35,7 @@ fun BalanceScreen(
             verticalAlignment = Alignment.CenterVertically
         ){
             Spacer(modifier = Modifier
-                .weight(0.5f))
+                .weight(1f))
 
             Image(
                 painter = painterResource(id = R.drawable.iconflower),
@@ -43,14 +43,14 @@ fun BalanceScreen(
                 modifier = Modifier
                     .size(50.dp))
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(2f))
 
             Image(
                 painter = painterResource(id = R.drawable.iconbalance),
                 contentDescription = "app icon balance",
                 modifier = Modifier.size(50.dp))
 
-            Spacer(modifier = Modifier.weight(1.5f)            )
+            Spacer(modifier = Modifier.weight(4f)            )
 
         }
         },
@@ -65,10 +65,10 @@ fun BalanceScreen(
             ) {
                 Box(modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
+                    .weight(4f)
                     .background(Color.Black))
 
-                Spacer(modifier = Modifier.weight(1.5f))
+                Spacer(modifier = Modifier.weight(1f))
 
                 Row {
                     Box(modifier = Modifier
@@ -101,6 +101,9 @@ fun BalanceScreen(
                         .background(color = Color.Red)
                     )
                 }
+
+                Spacer(modifier = Modifier.weight(5f))
+
 
 
             }
