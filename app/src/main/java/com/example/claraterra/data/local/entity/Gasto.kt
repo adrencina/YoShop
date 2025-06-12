@@ -8,5 +8,5 @@ data class Gasto(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val descripcion: String,
     val monto: Double,
-    val fecha: String
+    val timestamp: Long = System.currentTimeMillis()
 )

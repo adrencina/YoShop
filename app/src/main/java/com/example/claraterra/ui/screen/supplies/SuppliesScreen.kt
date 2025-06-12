@@ -9,7 +9,7 @@ import com.example.claraterra.ui.component.BottomNavigationBar
 import com.example.claraterra.ui.component.ScreenContainer
 
 @Composable
-fun InventoryScreen(
+fun SuppliesScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {

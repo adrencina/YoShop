@@ -28,8 +28,17 @@ val AppTypography = Typography(
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp
     ),
+    titleMedium = TextStyle(
+        fontFamily = Manrope,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
+    ),
     bodyMedium = TextStyle(
         fontFamily = Manrope,
         fontSize = 16.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = Manrope,
+        fontSize = 14.sp
     )
 )

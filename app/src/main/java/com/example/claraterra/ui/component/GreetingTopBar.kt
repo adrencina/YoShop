@@ -3,26 +3,34 @@ package com.example.claraterra.ui.component
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.claraterra.ui.theme.TerraBackground
+import com.example.claraterra.ui.theme.TerraPrimary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GreetingTopBar(userName: String) {
     TopAppBar(
-        title = { Text(text = "¡Hola, $userName!") },
+        title = {
+            Text(
+                text = "¡Hola, $userName!",
+                style = MaterialTheme.typography.titleLarge
+            )
+        },
         navigationIcon = {
             Icon(
                 imageVector = Icons.Filled.Face,
                 contentDescription = "User Avatar",
-                modifier = Modifier
-                    .padding(start = 12.dp)
+                modifier = Modifier.padding(start = 12.dp),
+                tint = TerraPrimary
             )
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = TerraBackground,
+            titleContentColor = TerraPrimary
+        )
     )
 }
