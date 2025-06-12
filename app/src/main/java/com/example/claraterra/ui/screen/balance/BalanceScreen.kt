@@ -83,13 +83,13 @@ fun BalanceScreen(
             ) {
                 Box(
                     modifier = Modifier
-                        .width(300.dp)
-                        .height(200.dp)
+                        .fillMaxWidth()
+                        .weight(3f)
                         .background(Color.Gray)
                         .align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(0.2f))
 
                 Row {
                     Box(
@@ -101,6 +101,11 @@ fun BalanceScreen(
                     )
 
                     Spacer(modifier = Modifier.weight(1f))
+
+                    Text(
+                        text = "Gastos $",
+                        fontSize = 18.sp
+                    )
 
                     Text(
                         text = textLosses.value,
@@ -123,6 +128,11 @@ fun BalanceScreen(
                     Spacer(modifier = Modifier.weight(1f))
 
                     Text(
+                        text = "Ventas $",
+                        fontSize = 18.sp
+                    )
+
+                    Text(
                         text = textSales.value,
                         fontSize = 18.sp
                     )
@@ -142,6 +152,12 @@ fun BalanceScreen(
 
                     Spacer(modifier = Modifier.weight(1f))
 
+
+                    Text(
+                        text = "Utilidad $",
+                        fontSize = 18.sp
+                    )
+
                     Text(
                         text = textProfit.value,
                         fontSize = 18.sp
@@ -150,7 +166,7 @@ fun BalanceScreen(
                     Spacer(modifier = Modifier.weight(9f))
 
                 }
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(0.2f))
 
                 Row {
                     Spacer(modifier = Modifier.weight(2f))
@@ -185,21 +201,25 @@ fun BalanceScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.weight(0.5f))
+                Spacer(modifier = Modifier.weight(0.1f))
 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(0.1f)
+                        .clip(RoundedCornerShape(10.dp))
                         .background(color = Color(0xFF7D496A))
                 )
 
-                Spacer(modifier = Modifier.weight(0.5f))
 
-                Row {
-                    Spacer(modifier = Modifier.weight(0.5f))
+                Row (modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(4f)){
 
-                    Column {
+                    Column(modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f)){
+
                         Text(
                             text = salesDay,
                             fontSize = 18.sp
@@ -207,25 +227,26 @@ fun BalanceScreen(
 
                         LazyColumn(
                             modifier = Modifier
-                                .fillMaxHeight(0.8f)
-                                .width(180.dp)
+                                .fillMaxWidth(1f)
+                                .fillMaxHeight(1f)
                                 .background(color = Color.Black)
                         ) {
 
                         }
                     }
+                    Spacer(modifier = Modifier.weight(0.05f))
 
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    Column {
+                    Column (modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f)){
                         Text(
                             text = lossesDay,
                             fontSize = 18.sp
                         )
                         LazyColumn(
                             modifier = Modifier
-                                .fillMaxHeight(0.8f)
-                                .width(180.dp)
+                                .fillMaxWidth(1f)
+                                .fillMaxHeight(1f)
                                 .background(color = Color.Black)
                         ) {
 
