@@ -38,24 +38,45 @@ class ProductManagementViewModel @Inject constructor(
         }
     }
 
-    fun onSaveProducto(nombre: String, costoStr: String, ventaStr: String) {
-        // Validación básica
+    fun onSaveProducto(
+        id: Int?,
+        nombre: String,
+        costoStr: String,
+        ventaStr: String,
+        stockStr: String,
+        descripcion: String?,
+        imagenUri: String?
+    ) {
         val costo = costoStr.toDoubleOrNull()
         val venta = ventaStr.toDoubleOrNull()
-        if (nombre.isBlank() || costo == null || venta == null) {
+        val stock = stockStr.toIntOrNull()
+
+        if (nombre.isBlank() || costo == null || venta == null || stock == null) {
             return
         }
 
         viewModelScope.launch {
             val productoActual = _uiState.value.productoSeleccionado
             if (productoActual == null) {
-                productoDao.insertarProducto(
-                    Producto(nombre = nombre, precioCosto = costo, precioVenta = venta)
+                val nuevoProducto = Producto(
+                    nombre = nombre,
+                    precioCosto = costo,
+                    precioVenta = venta,
+                    stock = stock,
+                    descripcion = descripcion,
+                    imagenUri = imagenUri
                 )
+                productoDao.insertarProducto(nuevoProducto)
             } else {
-                productoDao.actualizarProducto(
-                    productoActual.copy(nombre = nombre, precioCosto = costo, precioVenta = venta)
+                val productoActualizado = productoActual.copy(
+                    nombre = nombre,
+                    precioCosto = costo,
+                    precioVenta = venta,
+                    stock = stock,
+                    descripcion = descripcion,
+                    imagenUri = imagenUri
                 )
+                productoDao.actualizarProducto(productoActualizado)
             }
             onDismissDialog()
         }

@@ -1,16 +1,18 @@
 package com.example.claraterra.ui.component
 
 import androidx.compose.foundation.background
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 
+@Composable
 fun Modifier.cardGradientBackground(): Modifier {
     return this.background(
         brush = Brush.verticalGradient(
             colors = listOf(
-                Color(0xFFF4F0FF), // Parte inferior (más claro) 0xFFF4F0FF
-                Color(0xFFD7CCFF)  // Parte superior (más oscuro) 0xFFD7CCFF
+                MaterialTheme.colorScheme.surface,
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
             )
         )
     )

@@ -3,6 +3,9 @@ package com.example.claraterra.data.local.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
+import com.example.claraterra.data.local.entity.Producto
 import com.example.claraterra.data.local.entity.Venta
 import kotlinx.coroutines.flow.Flow
 
@@ -11,7 +14,16 @@ interface VentaDao {
     @Insert
     suspend fun insertarVenta(venta: Venta)
 
-    // CONSULTA GANANCIA
+    @Update
+    suspend fun actualizarProducto(producto: Producto)
+
+    @Transaction
+    suspend fun registrarVentaYActualizarStock(venta: Venta, productoActualizado: Producto) {
+        insertarVenta(venta)
+        actualizarProducto(productoActualizado)
+    }
+
+    // --- TUS QUERIES ORIGINALES (QUEDAN IGUAL) ---
     @Query("""
         SELECT COALESCE(SUM(v.cantidad * (v.precioVentaAlMomento - p.precioCosto)), 0.0)
         FROM ventas AS v
@@ -20,7 +32,6 @@ interface VentaDao {
     """)
     fun getGananciaNetaEnRango(startTime: Long, endTime: Long): Flow<Double>
 
-    // CONSULTA INGRESO BRUTO
     @Query("""
         SELECT COALESCE(SUM(cantidad * precioVentaAlMomento), 0.0)
         FROM ventas

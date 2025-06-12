@@ -49,6 +49,9 @@ android {
 
 dependencies {
 
+    // Coil
+    implementation(libs.coil.compose)
+
     // --- AndroidX ---
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

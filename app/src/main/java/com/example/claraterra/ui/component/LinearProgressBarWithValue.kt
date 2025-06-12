@@ -35,7 +35,6 @@ fun LinearProgressBarWithValue(
                 .background(primaryColor)
         )
 
-        // Texto
         Text(
             text = percentageText,
             modifier = Modifier.padding(start = 12.dp),

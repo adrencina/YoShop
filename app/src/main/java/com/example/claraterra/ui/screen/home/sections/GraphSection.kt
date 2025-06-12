@@ -5,14 +5,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Storefront
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.claraterra.ui.component.cardGradientBackground
@@ -21,7 +17,6 @@ import com.example.claraterra.ui.component.SemiCircleChart
 import com.example.claraterra.ui.navigation.NavigationRoute
 import com.example.claraterra.ui.screen.home.sections.component.ActionCard
 import com.example.claraterra.ui.screen.home.state.HomeUiState
-import com.example.claraterra.ui.theme.AppShapes
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -37,79 +32,72 @@ fun GraphSection(
         modifier = modifier.fillMaxWidth().height(240.dp),
     ) {
         Card(
-            modifier = Modifier.fillMaxHeight().weight(3f).padding(end = 6.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-            shape = AppShapes.small,
-            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+            modifier = Modifier.fillMaxHeight().weight(3f).padding(end = 8.dp),
+            shape = MaterialTheme.shapes.medium,
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
         ) {
             Column(
-                modifier = Modifier.fillMaxSize().cardGradientBackground().padding(vertical = 16.dp, horizontal = 16.dp),
+                modifier = Modifier.fillMaxSize().cardGradientBackground().padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    modifier = Modifier.padding(bottom = 8.dp),
                     text = "Ganancia del día",
-                    color = Color.Black.copy(alpha = 0.7f),
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
                 )
 
-                // El gráfico de semicírculo muestra la GANANCIA NETA del día.
                 SemiCircleChart(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     value = uiState.gananciaNetaDiaria.toFloat(),
                     maxValue = 10000f,
-                    primaryColor = if (uiState.gananciaNetaDiaria >= 0) Color(0xFF81C784) else Color(0xFFE57373),
-                    secondaryColor = Color.Black.copy(alpha = 0.1f),
+                    primaryColor = if (uiState.gananciaNetaDiaria >= 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
+                    secondaryColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                     centerText = currencyFormatter.format(uiState.gananciaNetaDiaria),
-                    strokeWidth = 50.dp
+                    strokeWidth = 40.dp
                 )
 
                 Spacer(Modifier.weight(1f))
 
-                // La barra de progreso muestra el avance hacia la meta SEMANAL de INGRESO BRUTO.
                 LinearProgressBarWithValue(
                     modifier = Modifier.fillMaxWidth(),
                     value = uiState.ingresoBrutoSemanal.toFloat(),
                     maxValue = uiState.metaVentaSemanal.toFloat(),
-                    primaryColor = Color(0xFF64B5F6),
-                    secondaryColor = Color.Black.copy(alpha = 0.1f)
+                    primaryColor = MaterialTheme.colorScheme.secondary,
+                    secondaryColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
                 )
 
                 Text(
-                    text = "Objetivo de Ingreso Semanal",
-                    color = Color.Black.copy(alpha = 0.7f),
+                    text = "Objetivo Ingreso Semanal",
                     style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                     modifier = Modifier.padding(top = 8.dp)
                 )
             }
         }
 
-        // Columna de acciones rápidas
         Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f),
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier.fillMaxHeight().weight(1f),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             ActionCard(
-                modifier = Modifier.weight(1f).padding(bottom = 4.dp),
-                color = Color(0xFF81C784),
+                modifier = Modifier.weight(1f),
+                color = MaterialTheme.colorScheme.primary,
                 icon = Icons.Filled.Add,
-                contentDescription = "New Sale",
+                contentDescription = "Nueva Venta",
                 onClick = { navController.navigate(NavigationRoute.Sell.route) }
             )
             ActionCard(
-                modifier = Modifier.weight(1f).padding(vertical = 2.dp),
-                color = Color(0xFF64B5F6),
+                modifier = Modifier.weight(1f),
+                color = MaterialTheme.colorScheme.secondary,
                 icon = Icons.Filled.BarChart,
-                contentDescription = "View Balance",
-                onClick = { /* Navegar o vemos despues... */ }
+                contentDescription = "Balance",
+                onClick = { /* ... */ }
             )
             ActionCard(
-                modifier = Modifier.weight(1f).padding(top = 4.dp),
-                color = Color(0xFFE57373),
+                modifier = Modifier.weight(1f),
+                color = MaterialTheme.colorScheme.tertiary,
                 icon = Icons.Filled.Storefront,
-                contentDescription = "Supplies",
+                contentDescription = "Insumos",
                 onClick = { navController.navigate(NavigationRoute.Supplies.route) }
             )
         }

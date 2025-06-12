@@ -16,6 +16,7 @@ import com.example.claraterra.ui.screen.home.sections.GraphSection
 import com.example.claraterra.ui.screen.home.sections.MotivationalSection
 import com.example.claraterra.ui.screen.home.sections.StockSection
 import com.example.claraterra.ui.screen.home.viewmodel.HomeViewModel
+import com.example.claraterra.ui.theme.ClaraTerraTheme
 
 @Composable
 fun HomeScreen(
@@ -25,20 +26,25 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        topBar = { GreetingTopBar(userName = uiState.nombreUsuario) },
-        bottomBar = { BottomNavigationBar(navController) }
-    ) { innerPadding ->
-        ScreenContainer(modifier = Modifier.padding(innerPadding)) {
-            GraphSection(
-                navController = navController,
-                uiState = uiState
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            MotivationalSection()
-            Spacer(modifier = Modifier.height(16.dp))
-            StockSection(navController = navController)
+    ClaraTerraTheme {
+        Scaffold(
+            modifier = modifier.fillMaxSize(),
+            topBar = { GreetingTopBar(userName = uiState.nombreUsuario) },
+            bottomBar = { BottomNavigationBar(navController) }
+        ) { innerPadding ->
+            ScreenContainer(modifier = Modifier.padding(innerPadding)) {
+                GraphSection(
+                    navController = navController,
+                    uiState = uiState
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                MotivationalSection()
+                Spacer(modifier = Modifier.height(16.dp))
+                StockSection(
+                    navController = navController,
+                    uiState = uiState
+                )
+            }
         }
     }
 }

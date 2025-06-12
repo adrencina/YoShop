@@ -9,7 +9,7 @@ import com.example.claraterra.data.local.entity.Gasto
 import com.example.claraterra.data.local.entity.Producto
 import com.example.claraterra.data.local.entity.Venta
 
-@Database(entities = [Venta::class, Gasto::class, Producto::class], version = 2)
+@Database(entities = [Venta::class, Gasto::class, Producto::class], version = 3)
 abstract class ClaraTerraDatabase : RoomDatabase() {
     abstract fun ventaDao(): VentaDao
     abstract fun gastoDao(): GastoDao

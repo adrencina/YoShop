@@ -2,10 +2,8 @@ package com.example.claraterra.ui.component
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
@@ -35,7 +33,6 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationItem(NavigationRoute.Balance, Icons.Outlined.BarChart, Icons.Filled.BarChart),
         NavigationItem(NavigationRoute.Settings, Icons.Outlined.Settings, Icons.Filled.Settings)
     )
-
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     Box(
@@ -44,79 +41,47 @@ fun BottomNavigationBar(navController: NavController) {
             .padding(horizontal = horizontalPadding, vertical = bottomPadding)
     ) {
         Card(
-            shape = RoundedCornerShape(50),
+            shape = CircleShape,
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
+                containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
             ),
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(navigationBarHeight)
+                .height(navigationBarHeight),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val iconSize = 32.dp
-
                 items.forEach { item ->
                     val isSelected = currentRoute == item.route.route
                     val isSell = item.route.route == NavigationRoute.Sell.route
 
                     Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .then(if (isSell) Modifier.offset(y = (-1).dp) else Modifier),
+                        modifier = Modifier.weight(1f),
                         contentAlignment = Alignment.Center
                     ) {
                         if (isSell) {
-                            Surface(
+                            FloatingActionButton(
+                                onClick = { if (!isSelected) navController.navigate(item.route.route) },
                                 shape = CircleShape,
-                                color = MaterialTheme.colorScheme.primary,
-                                shadowElevation = 5.dp,
-                                tonalElevation = 4.dp,
-                                modifier = Modifier.size(40.dp)
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                                contentColor = MaterialTheme.colorScheme.onSecondary,
+                                elevation = FloatingActionButtonDefaults.elevation(2.dp),
+                                modifier = Modifier.size(56.dp).offset(y = (-0.5).dp)
                             ) {
-                                IconButton(
-                                    onClick = {
-                                        if (!isSelected) {
-                                            navController.navigate(item.route.route) {
-                                                popUpTo(NavigationRoute.Home.route) {
-                                                    inclusive = false
-                                                }
-                                                launchSingleTop = true
-                                            }
-                                        }
-                                    },
-                                    modifier = Modifier.fillMaxSize()
-                                ) {
-                                    Icon(
-                                        imageVector = item.filledIcon,
-                                        contentDescription = item.route.route,
-                                        tint = MaterialTheme.colorScheme.onPrimary
-                                    )
-                                }
+                                Icon(imageVector = item.filledIcon, contentDescription = item.route.route, modifier = Modifier.size(32.dp))
                             }
                         } else {
-                            IconButton(
-                                onClick = {
-                                    if (!isSelected) {
-                                        navController.navigate(item.route.route) {
-                                            popUpTo(NavigationRoute.Home.route) {
-                                                inclusive = false
-                                            }
-                                            launchSingleTop = true
-                                        }
-                                    }
-                                },
-                                modifier = Modifier.size(iconSize),
-                                interactionSource = MutableInteractionSource()
-                            ) {
+                            IconButton(onClick = { if (!isSelected) navController.navigate(item.route.route) }) {
                                 Icon(
                                     imageVector = if (isSelected) item.filledIcon else item.outlinedIcon,
                                     contentDescription = item.route.route,
+                                    modifier = Modifier.size(28.dp),
                                     tint = if (isSelected) MaterialTheme.colorScheme.primary
-                                    else MaterialTheme.colorScheme.onSurfaceVariant
+                                    else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                                 )
                             }
                         }

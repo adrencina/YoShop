@@ -43,23 +43,35 @@ class SellViewModel @Inject constructor(
     }
 
     fun onCantidadChange(cantidad: Int) {
-        if (cantidad > 0) {
+        val producto = _uiState.value.productoSeleccionado ?: return
+        if (cantidad in 1..producto.stock) {
             _uiState.update { it.copy(cantidadVenta = cantidad) }
         }
     }
 
     fun onConfirmarVenta() {
         viewModelScope.launch {
-            val estadoActual = _uiState.value
-            estadoActual.productoSeleccionado?.let { producto ->
-                val nuevaVenta = Venta(
-                    productoId = producto.id,
-                    cantidad = estadoActual.cantidadVenta,
-                    precioVentaAlMomento = producto.precioVenta
-                )
-                ventaDao.insertarVenta(nuevaVenta)
+            val productoAVender = uiState.value.productoSeleccionado
+            val cantidadVendida = uiState.value.cantidadVenta
+
+            if (productoAVender == null || cantidadVendida <= 0 || cantidadVendida > productoAVender.stock) {
                 onDismissDialog()
+                return@launch
             }
+
+            val nuevaVenta = Venta(
+                productoId = productoAVender.id,
+                cantidad = cantidadVendida,
+                precioVentaAlMomento = productoAVender.precioVenta
+            )
+
+            val productoActualizado = productoAVender.copy(
+                stock = productoAVender.stock - cantidadVendida
+            )
+
+            ventaDao.registrarVentaYActualizarStock(nuevaVenta, productoActualizado)
+
+            onDismissDialog()
         }
     }
 }
