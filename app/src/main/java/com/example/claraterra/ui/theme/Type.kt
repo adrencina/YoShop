@@ -36,5 +36,9 @@ val AppTypography = Typography(
     bodyMedium = TextStyle(
         fontFamily = Manrope,
         fontSize = 16.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = Manrope,
+        fontSize = 14.sp
     )
 )

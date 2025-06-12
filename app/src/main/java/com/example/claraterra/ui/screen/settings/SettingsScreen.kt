@@ -1,6 +1,5 @@
 package com.example.claraterra.ui.screen.settings
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.claraterra.ui.component.BottomNavigationBar
 import com.example.claraterra.ui.theme.ClaraTerraTheme
@@ -25,13 +26,13 @@ import com.example.claraterra.ui.theme.ClaraTerraTheme
 @Composable
 fun SettingsScreen(
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: SettingsViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showGoalDialog by remember { mutableStateOf(false) }
-    var weeklyGoal by remember { mutableStateOf("50000") }
-    var isDarkTheme by remember { mutableStateOf(false) }
 
-    ClaraTerraTheme(darkTheme = isDarkTheme) { // El tema ahora responde al Switch
+    ClaraTerraTheme(darkTheme = uiState.isDarkTheme) {
         Scaffold(
             modifier = modifier.fillMaxSize(),
             topBar = {
@@ -52,24 +53,23 @@ fun SettingsScreen(
                     .padding(innerPadding),
                 contentPadding = PaddingValues(vertical = 16.dp)
             ) {
-                // --- SECCIÓN DE PERSONALIZACIÓN ---
                 item {
                     SectionHeader("Personalización")
                     SettingRow(
                         title = "Objetivo de ingreso semanal",
-                        subtitle = "Tu meta actual es de $$weeklyGoal",
-                        icon = { Icon(Icons.Default.TrackChanges, contentDescription = "Objetivo") },
+                        subtitle = "Tu meta actual es de $${uiState.weeklyGoal}",
+                        icon = { Icon(Icons.Default.TrackChanges, "Objetivo") },
                         onClick = { showGoalDialog = true }
                     )
                     SettingRow(
                         title = "Tema oscuro",
-                        subtitle = if (isDarkTheme) "Activado" else "Desactivado",
-                        icon = { Icon(Icons.Default.Brightness4, contentDescription = "Tema") },
-                        onClick = { isDarkTheme = !isDarkTheme } // También clickeable
+                        subtitle = if (uiState.isDarkTheme) "Activado" else "Desactivado",
+                        icon = { Icon(Icons.Default.Brightness4, "Tema") },
+                        onClick = { viewModel.onThemeChanged(!uiState.isDarkTheme) }
                     ) {
                         Switch(
-                            checked = isDarkTheme,
-                            onCheckedChange = { isDarkTheme = it }
+                            checked = uiState.isDarkTheme,
+                            onCheckedChange = { viewModel.onThemeChanged(it) }
                         )
                     }
                 }
@@ -111,17 +111,16 @@ fun SettingsScreen(
 
     if (showGoalDialog) {
         GoalEntryDialog(
-            currentGoal = weeklyGoal,
+            currentGoal = uiState.weeklyGoal,
             onDismiss = { showGoalDialog = false },
             onSave = { newGoal ->
-                weeklyGoal = newGoal
+                viewModel.onGoalChanged(newGoal)
                 showGoalDialog = false
             }
         )
     }
 }
 
-// --- COMPONENTES AUXILIARES PARA LA PANTALLA DE SETTINGS ---
 
 @Composable
 private fun SectionHeader(title: String) {
@@ -146,30 +145,20 @@ private fun SettingRow(
         color = MaterialTheme.colorScheme.surface
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 20.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(modifier = Modifier.size(32.dp)) {
-                icon()
-            }
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text(text = title, style = MaterialTheme.typography.titleMedium)
+            Box(modifier = Modifier.size(24.dp)) { icon() }
+            Column(modifier = Modifier.weight(1f).padding(horizontal = 16.dp)) {
+                Text(text = title, style = MaterialTheme.typography.titleSmall)
                 Text(
                     text = subtitle,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
             }
             if (trailingContent != null) {
-                Box(modifier = Modifier.size(48.dp)) {
-                    trailingContent()
-                }
+                Box { trailingContent() }
             }
         }
     }

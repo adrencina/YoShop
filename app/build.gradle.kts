@@ -49,6 +49,8 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.datastore.preferences)
+
     // Coil
     implementation(libs.coil.compose)
 

@@ -6,6 +6,7 @@ import com.example.claraterra.data.local.dao.ProductoDao
 import com.example.claraterra.data.repository.RegistroRepository
 import com.example.claraterra.ui.screen.home.state.HomeUiState
 import com.example.claraterra.ui.screen.home.state.StockStatus
+import com.example.claraterra.ui.screen.settings.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,14 +18,16 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: RegistroRepository,
-    private val productoDao: ProductoDao
+    private val productoDao: ProductoDao,
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     val uiState: StateFlow<HomeUiState> = combine(
         repository.obtenerGananciaNetaEnRango(getInicioHoy(), Long.MAX_VALUE),
         repository.obtenerIngresoBrutoEnRango(getInicioSemana(), Long.MAX_VALUE),
-        productoDao.obtenerProductos()
-    ) { gananciaDia, ingresoSemana, productos ->
+        productoDao.obtenerProductos(),
+        settingsRepository.weeklyGoalFlow
+    ) { gananciaDia, ingresoSemana, productos, metaSemanal ->
 
         val agotados = productos.count { it.stock == 0 }
         val stockBajo = productos.count { it.stock in 1..5 }
@@ -39,6 +42,7 @@ class HomeViewModel @Inject constructor(
         HomeUiState(
             gananciaNetaDiaria = gananciaDia ?: 0.0,
             ingresoBrutoSemanal = ingresoSemana ?: 0.0,
+            metaVentaSemanal = metaSemanal.toDoubleOrNull() ?: 50000.0,
             stockStatus = status,
             itemsConStockCritico = agotados + stockBajo,
             isLoading = false
