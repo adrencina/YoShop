@@ -1,8 +1,9 @@
 [versions]
-agp = "8.10.0"
+agp = "8.10.1"
 coilCompose = "2.6.0"
 datastorePreferences = "1.1.7"
 kotlin = "2.0.21"
+
 
 # AndroidX
 coreKtx = "1.16.0"
@@ -61,6 +62,7 @@ androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
 
 # Material 3
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }

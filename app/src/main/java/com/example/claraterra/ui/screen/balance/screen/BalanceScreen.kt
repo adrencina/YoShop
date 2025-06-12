@@ -1,4 +1,4 @@
-package com.example.claraterra.ui.screen.balance
+package com.example.claraterra.ui.screen.balance.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +21,8 @@ import androidx.navigation.NavController
 import com.example.claraterra.R
 import com.example.claraterra.ui.component.BottomNavigationBar
 import com.example.claraterra.ui.component.ScreenContainer
+import com.example.claraterra.ui.component.SemiCircleChart
+import com.example.claraterra.ui.screen.balance.sections.component.chartPie
 
 
 @Composable
@@ -81,12 +83,12 @@ fun BalanceScreen(
                     .fillMaxSize()
                     .padding(20.dp),
             ) {
-                Box(
-                    modifier = Modifier
+                chartPie(
+                    modifier = ( Modifier
                         .fillMaxWidth()
-                        .weight(3f)
-                        .background(Color.Gray)
-                        .align(Alignment.CenterHorizontally)
+                        .weight(2f)
+                        .align(Alignment.CenterHorizontally)),
+                    porcentajes = arrayOf(0.5f,0.25f,0.10f)
                 )
 
                 Spacer(modifier = Modifier.weight(0.2f))

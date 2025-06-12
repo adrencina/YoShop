@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.claraterra.ui.screen.balance.BalanceScreen
+import com.example.claraterra.ui.screen.balance.screen.BalanceScreen
 import com.example.claraterra.ui.screen.home.screen.HomeScreen
 import com.example.claraterra.ui.screen.login.LoginScreen
 import com.example.claraterra.ui.screen.products.ProductManagementScreen
