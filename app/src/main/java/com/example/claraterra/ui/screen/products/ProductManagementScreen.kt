@@ -127,7 +127,7 @@ private fun ProductoListItem(
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(producto.imagenUri)
-                    .error(R.drawable.ic_launcher_background)
+                    .error(R.drawable.iconflower)
                     .build(),
                 contentDescription = producto.nombre,
                 modifier = Modifier
@@ -246,7 +246,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                painter = painterResource(id = R.drawable.iconflower),
                 contentDescription = null,
                 modifier = Modifier.size(120.dp)
             )

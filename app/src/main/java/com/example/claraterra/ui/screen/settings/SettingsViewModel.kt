@@ -12,21 +12,20 @@ class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(SettingsUiState())
-    val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<SettingsUiState> =
+        combine(
+            settingsRepository.weeklyGoalFlow,
+            settingsRepository.isDarkThemeFlow
+        ) { goal, isDark ->
+            SettingsUiState(weeklyGoal = goal, isDarkTheme = isDark)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = SettingsUiState()
+        )
 
-    init {
-        viewModelScope.launch {
-            combine(
-                settingsRepository.weeklyGoalFlow,
-                settingsRepository.isDarkThemeFlow
-            ) { goal, isDark ->
-                SettingsUiState(weeklyGoal = goal, isDarkTheme = isDark)
-            }.collect {
-                _uiState.value = it
-            }
-        }
-    }
+    private val _signOutEvent = MutableSharedFlow<Unit>()
+    val signOutEvent = _signOutEvent.asSharedFlow()
 
     fun onGoalChanged(newGoal: String) {
         viewModelScope.launch {
@@ -37,6 +36,13 @@ class SettingsViewModel @Inject constructor(
     fun onThemeChanged(isDark: Boolean) {
         viewModelScope.launch {
             settingsRepository.setTheme(isDark)
+        }
+    }
+
+    fun onSignOutClicked() {
+        viewModelScope.launch {
+            settingsRepository.signOut()
+            _signOutEvent.emit(Unit)
         }
     }
 }

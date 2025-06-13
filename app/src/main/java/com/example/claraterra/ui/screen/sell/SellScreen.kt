@@ -27,9 +27,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.claraterra.R
 import com.example.claraterra.data.local.entity.Producto
-import com.example.claraterra.ui.component.BottomNavigationBar
-import com.example.claraterra.ui.theme.ClaraTerraTheme
-import kotlinx.coroutines.flow.map
+import com.example.claraterra.ui.component.GreetingTopBar
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -41,61 +39,41 @@ fun SellScreen(
     viewModel: SellViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val productos by viewModel.productosFiltrados.collectAsStateWithLifecycle(initialValue = emptyList())
-    val searchQuery by viewModel.uiState.map { it.searchQuery }.collectAsStateWithLifecycle(initialValue = "")
+    val productos by viewModel.productosFiltrados.collectAsStateWithLifecycle()
 
-    ClaraTerraTheme {
-        Scaffold(
-            modifier = modifier.fillMaxSize(),
-            topBar = {
-                TopAppBar(
-                    title = { Text("Registrar Venta") },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary
-                    )
-                )
-            },
-            bottomBar = { BottomNavigationBar(navController = navController) },
-            containerColor = MaterialTheme.colorScheme.background
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                Text(
-                    text = "Seleccioná un producto de tu catálogo para registrar una nueva venta.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
-                )
+    Column(
+        modifier = modifier.fillMaxSize()
+    ) {
+        GreetingTopBar(userName = "una nueva Venta")
 
-                // --- Buscador ---
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { viewModel.onSearchQueryChange(it) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    placeholder = { Text("Buscar producto...") },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
-                    singleLine = true
-                )
+        Text(
+            text = "Seleccioná un producto de tu catálogo para registrar una nueva venta.",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+        )
 
-                // --- Lista de productos visual ---
-                LazyColumn(
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(productos, key = { it.id }) { producto ->
-                        ProductoVentaItem(
-                            producto = producto,
-                            onClick = { if (producto.stock > 0) viewModel.onProductoSeleccionado(producto) }
-                        )
-                    }
-                }
+        OutlinedTextField(
+            value = uiState.searchQuery, // <-- La forma simple y correcta de leer el valor
+            onValueChange = { viewModel.onSearchQueryChange(it) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            placeholder = { Text("Buscar producto...") },
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
+            singleLine = true
+        )
+
+        LazyColumn(
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(productos, key = { it.id }) { producto ->
+                ProductoVentaItem(
+                    producto = producto,
+                    onClick = { if (producto.stock > 0) viewModel.onProductoSeleccionado(producto) }
+                )
             }
         }
     }
@@ -133,7 +111,7 @@ private fun ProductoVentaItem(producto: Producto, onClick: () -> Unit) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(producto.imagenUri)
-                    .error(R.drawable.ic_launcher_foreground)
+                    .error(R.drawable.iconflower)
                     .build(),
                 contentDescription = producto.nombre,
                 modifier = Modifier
@@ -180,15 +158,14 @@ private fun VentaConfirmationDialog(
                     contentDescription = producto.nombre,
                     modifier = Modifier.size(100.dp).clip(MaterialTheme.shapes.medium)
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(Modifier.height(16.dp))
                 Text(text = producto.nombre, style = MaterialTheme.typography.headlineSmall)
                 Text(
                     text = "Stock disponible: ${producto.stock}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
-                Spacer(modifier = Modifier.height(24.dp))
-
+                Spacer(Modifier.height(24.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(
                         onClick = { onCantidadChange(uiState.cantidadVenta - 1) },
@@ -208,14 +185,10 @@ private fun VentaConfirmationDialog(
                         Icon(Icons.Default.Add, "Agregar uno")
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // --- Total ---
+                Spacer(Modifier.height(16.dp))
                 val total = producto.precioVenta * uiState.cantidadVenta
                 Text(text = "Total: ${currencyFormatter.format(total)}", style = MaterialTheme.typography.titleLarge)
                 Spacer(modifier = Modifier.height(24.dp))
-
-                // --- Botones ---
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     TextButton(onClick = onDismiss) { Text("CANCELAR") }
                     Button(

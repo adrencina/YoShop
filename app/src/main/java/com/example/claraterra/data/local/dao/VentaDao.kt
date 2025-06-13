@@ -1,10 +1,6 @@
 package com.example.claraterra.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
-import androidx.room.Update
+import androidx.room.*
 import com.example.claraterra.data.local.entity.Producto
 import com.example.claraterra.data.local.entity.Venta
 import kotlinx.coroutines.flow.Flow
@@ -23,19 +19,21 @@ interface VentaDao {
         actualizarProducto(productoActualizado)
     }
 
-    // --- TUS QUERIES ORIGINALES (QUEDAN IGUAL) ---
+    // --- CAMBIO: Se reemplazó "fecha" por "timestamp" ---
+    @Query("SELECT * FROM ventas WHERE timestamp BETWEEN :startTime AND :endTime ORDER BY timestamp DESC")
+    fun obtenerVentasDetalladasEnRango(startTime: Long, endTime: Long): Flow<List<Venta>>
+
     @Query("""
-        SELECT COALESCE(SUM(v.cantidad * (v.precioVentaAlMomento - p.precioCosto)), 0.0)
-        FROM ventas AS v
-        INNER JOIN productos AS p ON v.productoId = p.id
+        SELECT COALESCE(SUM(v.cantidad * p.precioVenta), 0.0) 
+        FROM ventas v JOIN productos p ON v.productoId = p.id 
+        WHERE v.timestamp BETWEEN :startTime AND :endTime
+    """)
+    fun getIngresoBrutoEnRango(startTime: Long, endTime: Long): Flow<Double>
+
+    @Query("""
+        SELECT COALESCE(SUM(v.cantidad * (p.precioVenta - p.precioCosto)), 0.0) 
+        FROM ventas v JOIN productos p ON v.productoId = p.id 
         WHERE v.timestamp BETWEEN :startTime AND :endTime
     """)
     fun getGananciaNetaEnRango(startTime: Long, endTime: Long): Flow<Double>
-
-    @Query("""
-        SELECT COALESCE(SUM(cantidad * precioVentaAlMomento), 0.0)
-        FROM ventas
-        WHERE timestamp BETWEEN :startTime AND :endTime
-    """)
-    fun getIngresoBrutoEnRango(startTime: Long, endTime: Long): Flow<Double>
 }

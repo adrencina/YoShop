@@ -19,93 +19,82 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.claraterra.ui.component.BottomNavigationBar
-import com.example.claraterra.ui.theme.ClaraTerraTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    navController: NavController,
+    navController: NavController, // La recibimos por si alguna opción la necesita
+    onSignOut: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showGoalDialog by remember { mutableStateOf(false) }
 
-    ClaraTerraTheme(darkTheme = uiState.isDarkTheme) {
-        Scaffold(
-            modifier = modifier.fillMaxSize(),
-            topBar = {
-                TopAppBar(
-                    title = { Text("Configuración") },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = MaterialTheme.colorScheme.onPrimary
-                    )
-                )
-            },
-            bottomBar = { BottomNavigationBar(navController = navController) },
-            containerColor = MaterialTheme.colorScheme.background
-        ) { innerPadding ->
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                contentPadding = PaddingValues(vertical = 16.dp)
+    // Efecto que escucha el evento de logout del ViewModel
+    LaunchedEffect(key1 = Unit) {
+        viewModel.signOutEvent.collect {
+            onSignOut()
+        }
+    }
+
+    // --- LA PANTALLA AHORA ES UNA LAZYCOLUMN DENTRO DE LA ESTRUCTURA PRINCIPAL ---
+    LazyColumn(
+        modifier = modifier.fillMaxSize(), // El modifier viene con el padding del Scaffold padre
+        contentPadding = PaddingValues(vertical = 16.dp)
+    ) {
+        // --- SECCIÓN DE PERSONALIZACIÓN ---
+        item {
+            SectionHeader("Personalización")
+            SettingRow(
+                title = "Objetivo de ingreso semanal",
+                subtitle = "Tu meta actual es de $${uiState.weeklyGoal}",
+                icon = { Icon(Icons.Default.TrackChanges, "Objetivo") },
+                onClick = { showGoalDialog = true }
+            )
+            SettingRow(
+                title = "Tema oscuro",
+                subtitle = if (uiState.isDarkTheme) "Activado" else "Desactivado",
+                icon = { Icon(Icons.Default.Brightness4, "Tema") },
+                onClick = { viewModel.onThemeChanged(!uiState.isDarkTheme) }
             ) {
-                item {
-                    SectionHeader("Personalización")
-                    SettingRow(
-                        title = "Objetivo de ingreso semanal",
-                        subtitle = "Tu meta actual es de $${uiState.weeklyGoal}",
-                        icon = { Icon(Icons.Default.TrackChanges, "Objetivo") },
-                        onClick = { showGoalDialog = true }
-                    )
-                    SettingRow(
-                        title = "Tema oscuro",
-                        subtitle = if (uiState.isDarkTheme) "Activado" else "Desactivado",
-                        icon = { Icon(Icons.Default.Brightness4, "Tema") },
-                        onClick = { viewModel.onThemeChanged(!uiState.isDarkTheme) }
-                    ) {
-                        Switch(
-                            checked = uiState.isDarkTheme,
-                            onCheckedChange = { viewModel.onThemeChanged(it) }
-                        )
-                    }
-                }
-
-                item { Spacer(modifier = Modifier.height(16.dp)) }
-
-                // --- SECCIÓN DE CUENTA Y DATOS ---
-                item {
-                    SectionHeader("Cuenta y Datos")
-                    SettingRow(
-                        title = "Exportar datos",
-                        subtitle = "Guardá un resumen de tus ventas y productos en un archivo.",
-                        icon = { Icon(Icons.AutoMirrored.Filled.ReceiptLong, contentDescription = "Exportar") },
-                        onClick = { /* Lógica de exportación futura */ }
-                    )
-                    SettingRow(
-                        title = "Cerrar sesión",
-                        subtitle = "Salí de tu cuenta de forma segura.",
-                        icon = { Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Cerrar Sesión") },
-                        onClick = { /* Lógica de logout futura */ }
-                    )
-                }
-
-                item { Spacer(modifier = Modifier.height(16.dp)) }
-
-                // --- SECCIÓN 'ACERCA DE' ---
-                item {
-                    SectionHeader("Acerca de")
-                    SettingRow(
-                        title = "Versión de la aplicación",
-                        subtitle = "1.0.0 (MVP)",
-                        icon = { Icon(Icons.Default.Info, contentDescription = "Versión") },
-                        onClick = {}
-                    )
-                }
+                Switch(
+                    checked = uiState.isDarkTheme,
+                    onCheckedChange = { viewModel.onThemeChanged(it) }
+                )
             }
+        }
+
+        item { Spacer(modifier = Modifier.height(16.dp)) }
+
+        // --- SECCIÓN DE CUENTA Y DATOS ---
+        item {
+            SectionHeader("Cuenta y Datos")
+            SettingRow(
+                title = "Exportar datos",
+                subtitle = "Guardá un resumen de tus ventas y productos.",
+                icon = { Icon(Icons.AutoMirrored.Filled.ReceiptLong, "Exportar") },
+                onClick = { /* Futuro */ }
+            )
+            SettingRow(
+                title = "Cerrar sesión",
+                subtitle = "Salí de tu cuenta de forma segura.",
+                icon = { Icon(Icons.AutoMirrored.Filled.ExitToApp, "Cerrar Sesión") },
+                onClick = { viewModel.onSignOutClicked() }
+            )
+        }
+
+        item { Spacer(modifier = Modifier.height(16.dp)) }
+
+        // --- SECCIÓN 'ACERCA DE' ---
+        item {
+            SectionHeader("Acerca de")
+            SettingRow(
+                title = "Versión de la aplicación",
+                subtitle = "1.0.0 (MVP)",
+                icon = { Icon(Icons.Default.Info, contentDescription = "Versión") },
+                onClick = {}
+            )
         }
     }
 

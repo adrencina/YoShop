@@ -49,6 +49,9 @@ android {
 
 dependencies {
 
+    // --- GOOGLE SIGN IN ---
+    implementation(libs.google.auth)
+
     implementation(libs.androidx.datastore.preferences)
 
     // Coil
@@ -64,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.appcompat)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(platform(libs.androidx.compose.bom))

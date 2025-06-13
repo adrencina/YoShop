@@ -3,28 +3,26 @@ package com.example.claraterra.ui.screen.supplies
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.claraterra.ui.component.BottomNavigationBar
-import com.example.claraterra.ui.component.ScreenContainer
+import com.example.claraterra.ui.component.GreetingTopBar
 
 @Composable
 fun SuppliesScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        modifier = modifier,
-        bottomBar = { BottomNavigationBar(navController = navController) }
-    ) { innerPadding ->
+    Column(
+        modifier = modifier.fillMaxSize()
+    ) {
+        GreetingTopBar(userName = "tus Insumos")
 
-        ScreenContainer(modifier = Modifier.padding(innerPadding)) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Pantalla de Proveedor")
-            }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "Proximamente: Pantalla de Proveedores/Insumos")
         }
     }
 }
