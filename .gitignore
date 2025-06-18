@@ -26,16 +26,14 @@ output.json
 .compose-cache/
 compose-cache/
 
-# --- Firebase ---
-google-services.json
-firebase-debug.log
-firebase-debug-event-*.json
-.crashlytics/
-fabric.properties
+## --- Firebase ---
+#google-services.json
+#firebase-debug.log
+#firebase-debug-event-*.json
+#.crashlytics/
+#fabric.properties
 
 # --- Room ---
-*.db
-*.db-journal
 *.db-shm
 *.db-wal
 
@@ -43,23 +41,16 @@ fabric.properties
 *.log
 *.tmp
 *.bak
-*.swp
 *.swo
 ehthumbs.db
 Thumbs.db
 
 # --- Git ---
-*.orig
-*.rej
 *.sublime-workspace
 *.sublime-project
 
 # --- Build y caches ---
-/build/
 **/build/
-.gradle/
-.idea/
-local.properties
 /.cxx/
 /out/
 
