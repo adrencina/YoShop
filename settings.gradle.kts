@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ClaraTerra"
+rootProject.name = "YoShop"
 include(":app")
  

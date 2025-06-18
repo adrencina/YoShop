@@ -13,11 +13,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.claraterra"
+    namespace = "com.adrencina.yoshop"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.claraterra"
+        applicationId = "com.adrencina.yoshop"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -49,6 +49,14 @@ android {
 
 dependencies {
 
+    // --- GOOGLE SIGN IN ---
+    implementation(libs.google.auth)
+
+    implementation(libs.androidx.datastore.preferences)
+
+    // Coil
+    implementation(libs.coil.compose)
+
     // --- AndroidX ---
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -59,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.appcompat)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(platform(libs.androidx.compose.bom))

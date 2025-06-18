@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">ClaraTerra</string>
+    <string name="app_name">YoShop</string>
+
+    <string name="default_web_client_id" translatable="false">811499287913-4imnrf0k3bjoi5ps8gvh1rp4napop5hm.apps.googleusercontent.com</string>
+
 </resources>
