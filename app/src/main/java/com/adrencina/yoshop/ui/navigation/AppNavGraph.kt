@@ -5,12 +5,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.adrencina.yoshop.ui.screen.balance.screen.BalanceScreen
-import com.adrencina.yoshop.ui.screen.home.screen.HomeScreen
-import com.adrencina.yoshop.ui.screen.products.ProductManagementScreen
-import com.adrencina.yoshop.ui.screen.sell.SellScreen
-import com.adrencina.yoshop.ui.screen.settings.SettingsScreen
-import com.adrencina.yoshop.ui.screen.supplies.SuppliesScreen
+import com.adrencina.yoshop.ui.balance.BalanceScreen
+import com.adrencina.yoshop.ui.home.HomeScreen
+import com.adrencina.yoshop.ui.products.ProductManagementScreen
+import com.adrencina.yoshop.ui.sell.SellScreen
+import com.adrencina.yoshop.ui.settings.SettingsScreen
+import com.adrencina.yoshop.ui.supplies.SuppliesScreen
 
 @Composable
 fun AppNavGraph(

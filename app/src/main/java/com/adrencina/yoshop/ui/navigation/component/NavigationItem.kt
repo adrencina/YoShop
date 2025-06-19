@@ -1,4 +1,4 @@
-package com.adrencina.yoshop.ui.navigation.component
+package com.adrencina.yoshop.ui.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.adrencina.yoshop.ui.navigation.NavigationRoute
